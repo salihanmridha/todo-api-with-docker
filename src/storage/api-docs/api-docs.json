@@ -1,0 +1,1173 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "TODO API OpenApi Documentation",
+        "description": "TODO API application swagger/openapi documentation",
+        "contact": {
+            "email": "salihanmridha@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost/api/",
+            "description": "TODO API Server"
+        }
+    ],
+    "paths": {
+        "/tasks": {
+            "post": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Store new task",
+                "description": "Returns task data",
+                "operationId": "storeTask",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TaskRequestDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TaskResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "403 Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HttpForbiddenResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                }
+            }
+        },
+        "/tasks/{id}": {
+            "get": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Get task information",
+                "description": "Returns task data",
+                "operationId": "getTaskById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Task id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TaskShowResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "404 not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HttpNotFoundResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "403 Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HttpForbiddenResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Update existing task",
+                "description": "Returns updated task data",
+                "operationId": "updateTask",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Task id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TaskUpdateRequestDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TaskShowResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "404 not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HttpNotFoundResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "422": {
+                        "description": "Unprocessable Content",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnprocessableContentResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "403 Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HttpForbiddenResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Delete existing task",
+                "description": "Deletes a record",
+                "operationId": "deleteTask",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Task id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 202
+                                        },
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "task deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "403 Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HttpForbiddenResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "404 not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HttpNotFoundResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/todos": {
+            "get": {
+                "tags": [
+                    "Todo"
+                ],
+                "summary": "Get list of todos",
+                "description": "Returns list of todos",
+                "operationId": "getTodoList",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TodoResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Todo"
+                ],
+                "summary": "Store new todo",
+                "description": "Returns todo data",
+                "operationId": "storetodo",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TodoRequestDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TodoStoreResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Content",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnprocessableContentResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                }
+            }
+        },
+        "/todos/{id}": {
+            "get": {
+                "tags": [
+                    "Todo"
+                ],
+                "summary": "Get todo information",
+                "description": "Returns todo data",
+                "operationId": "getTodoById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Todo id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TodoShowResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "404 not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HttpNotFoundResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Todo"
+                ],
+                "summary": "Update existing todo",
+                "description": "Returns updated todo data",
+                "operationId": "updateTodo",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Todo id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TodoRequestDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TodoShowResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "404 not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HttpNotFoundResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "422": {
+                        "description": "Unprocessable Content",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnprocessableContentResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Todo"
+                ],
+                "summary": "Delete existing todo",
+                "description": "Deletes a record",
+                "operationId": "deleteTodo",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Todo id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 202
+                                        },
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "todo deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "403 Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HttpForbiddenResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "404 not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HttpNotFoundResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/register": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Register an user",
+                "description": "Registering user and Returns json response with message",
+                "operationId": "registerUser",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegistrationRequestDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RegistrationResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Content",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnprocessableContentResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Login an user",
+                "description": "Login an user and Returns json response",
+                "operationId": "loginUser",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginRequestDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoginResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 401
+                                        },
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Email and Password doesn't match"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "HttpForbiddenResponseDTO": {
+                "title": "Http forbidden Response DTO",
+                "description": "Http forbidden (403 code) Response DTO",
+                "properties": {
+                    "status": {
+                        "title": "status",
+                        "type": "integer",
+                        "example": 403
+                    },
+                    "success": {
+                        "title": "success",
+                        "type": "boolean",
+                        "example": false
+                    },
+                    "error": {
+                        "title": "error",
+                        "type": "string",
+                        "example": "You dont have permission to take this action"
+                    }
+                },
+                "type": "object"
+            },
+            "HttpNotFoundResponseDTO": {
+                "title": "Http not found Response DTO",
+                "description": "Http not found (404 code) Response DTO",
+                "properties": {
+                    "status": {
+                        "title": "status",
+                        "type": "integer",
+                        "example": 404
+                    },
+                    "success": {
+                        "title": "success",
+                        "type": "boolean",
+                        "example": false
+                    },
+                    "error": {
+                        "title": "error",
+                        "type": "string",
+                        "example": "Something not found"
+                    }
+                },
+                "type": "object"
+            },
+            "LoginRequestDTO": {
+                "title": "Login Request DTO",
+                "description": "Login Request DTO",
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "email": {
+                        "title": "email",
+                        "description": "Email of the user",
+                        "type": "string",
+                        "example": "salihanmridha@gmail.com"
+                    },
+                    "password": {
+                        "title": "password",
+                        "description": "Password of the user",
+                        "type": "string",
+                        "example": "123456"
+                    }
+                },
+                "type": "object"
+            },
+            "LoginResponseDTO": {
+                "title": "Login Response DTO",
+                "description": "Login response DTO",
+                "properties": {
+                    "status": {
+                        "title": "status",
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "success": {
+                        "title": "success",
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "message": {
+                        "title": "message",
+                        "type": "string",
+                        "example": "Login successfully!"
+                    },
+                    "access_token": {
+                        "title": "access_token",
+                        "type": "string",
+                        "example": "1|41MXUHPB56YoGyvgjMt5WTKviKIckEm3RmrkXKH4"
+                    },
+                    "data": {
+                        "title": "data",
+                        "properties": {
+                            "id": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "name": {
+                                "type": "string",
+                                "example": "Salihan Mridha"
+                            },
+                            "email": {
+                                "type": "string",
+                                "example": "salihanmridha@gmail.com"
+                            },
+                            "created_at": {
+                                "type": "string",
+                                "example": "2023-03-02T12:46:12.000000Z"
+                            },
+                            "updated_at": {
+                                "type": "string",
+                                "example": "2023-03-02T12:46:12.000000Z"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "RegistrationRequestDTO": {
+                "title": "Registration Request DTO",
+                "description": "Registration Request DTO",
+                "required": [
+                    "name",
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "name": {
+                        "title": "name",
+                        "description": "Name of the user",
+                        "type": "string",
+                        "example": "Salihan Mridha"
+                    },
+                    "email": {
+                        "title": "email",
+                        "description": "Email of the user",
+                        "type": "string",
+                        "example": "salihanmridha@gmail.com"
+                    },
+                    "password": {
+                        "title": "password",
+                        "description": "Password of the user",
+                        "type": "string",
+                        "example": "123456"
+                    }
+                },
+                "type": "object"
+            },
+            "RegistrationResponseDTO": {
+                "title": "Registration Response DTO",
+                "description": "Registration response DTO",
+                "properties": {
+                    "status": {
+                        "title": "status",
+                        "type": "integer",
+                        "example": 201
+                    },
+                    "success": {
+                        "title": "success",
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "message": {
+                        "title": "message",
+                        "type": "string",
+                        "example": "User created successfully"
+                    }
+                },
+                "type": "object"
+            },
+            "TaskRequestDTO": {
+                "title": "Task Request DTO",
+                "description": "Task Request DTO",
+                "required": [
+                    "name",
+                    "todo_id"
+                ],
+                "properties": {
+                    "name": {
+                        "title": "name",
+                        "description": "Name of task",
+                        "type": "string",
+                        "example": "My task name"
+                    },
+                    "todo_id": {
+                        "title": "todo_id",
+                        "description": "Todo id",
+                        "type": "integer",
+                        "example": 1
+                    }
+                },
+                "type": "object"
+            },
+            "TaskResponseDTO": {
+                "title": "Task Response DTO",
+                "description": "Task response DTO",
+                "properties": {
+                    "status": {
+                        "title": "status",
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "success": {
+                        "title": "success",
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "data": {
+                        "title": "data",
+                        "properties": {
+                            "id": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "name": {
+                                "type": "string",
+                                "example": "My first todo"
+                            },
+                            "todo_id": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "created_at": {
+                                "type": "string",
+                                "example": "2023-03-02T12:46:12.000000Z"
+                            },
+                            "updated_at": {
+                                "type": "string",
+                                "example": "2023-03-02T12:46:12.000000Z"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "TaskShowResponseDTO": {
+                "title": "Task show Response DTO",
+                "description": "Task show response DTO",
+                "properties": {
+                    "status": {
+                        "title": "status",
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "success": {
+                        "title": "success",
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "data": {
+                        "title": "data",
+                        "properties": {
+                            "id": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "name": {
+                                "type": "string",
+                                "example": "My first task"
+                            },
+                            "todo_id": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "created_at": {
+                                "type": "string",
+                                "example": "2023-03-02T12:46:12.000000Z"
+                            },
+                            "updated_at": {
+                                "type": "string",
+                                "example": "2023-03-02T12:46:12.000000Z"
+                            },
+                            "todo": {
+                                "type": "array",
+                                "items": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "my todo name"
+                                        },
+                                        "description": {
+                                            "type": "string",
+                                            "example": "my todo description"
+                                        },
+                                        "user_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "TaskUpdateRequestDTO": {
+                "title": "Task update Request DTO",
+                "description": "Task update Request DTO",
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "name": {
+                        "title": "name",
+                        "description": "Name of task",
+                        "type": "string",
+                        "example": "My task name"
+                    }
+                },
+                "type": "object"
+            },
+            "TodoRequestDTO": {
+                "title": "Todo Request DTO",
+                "description": "Todo Request DTO",
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "name": {
+                        "title": "name",
+                        "description": "Name of todo",
+                        "type": "string",
+                        "example": "My todo name"
+                    },
+                    "description": {
+                        "title": "description",
+                        "description": "Todo description",
+                        "type": "string",
+                        "example": "My todo description",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "TodoResponseDTO": {
+                "title": "Todo Response DTO",
+                "description": "Todo response DTO",
+                "properties": {
+                    "status": {
+                        "title": "status",
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "success": {
+                        "title": "success",
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "data": {
+                        "title": "data",
+                        "properties": {
+                            "id": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "name": {
+                                "type": "string",
+                                "example": "My first todo"
+                            },
+                            "description": {
+                                "type": "string",
+                                "example": "my todo description"
+                            },
+                            "user_id": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "created_at": {
+                                "type": "string",
+                                "example": "2023-03-02T12:46:12.000000Z"
+                            },
+                            "updated_at": {
+                                "type": "string",
+                                "example": "2023-03-02T12:46:12.000000Z"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "TodoShowResponseDTO": {
+                "title": "Todo show Response DTO",
+                "description": "Todo show response DTO",
+                "properties": {
+                    "status": {
+                        "title": "status",
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "success": {
+                        "title": "success",
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "data": {
+                        "title": "data",
+                        "properties": {
+                            "id": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "name": {
+                                "type": "string",
+                                "example": "My first todo"
+                            },
+                            "description": {
+                                "type": "string",
+                                "example": "my todo description"
+                            },
+                            "user_id": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "created_at": {
+                                "type": "string",
+                                "example": "2023-03-02T12:46:12.000000Z"
+                            },
+                            "updated_at": {
+                                "type": "string",
+                                "example": "2023-03-02T12:46:12.000000Z"
+                            },
+                            "tasks": {
+                                "type": "array",
+                                "items": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "my task name"
+                                        },
+                                        "todo_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "TodoStoreResponseDTO": {
+                "title": "Todo stoere Response DTO",
+                "description": "Todo store response DTO",
+                "properties": {
+                    "status": {
+                        "title": "status",
+                        "type": "integer",
+                        "example": 201
+                    },
+                    "success": {
+                        "title": "success",
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "message": {
+                        "title": "message",
+                        "type": "string",
+                        "example": "TODO created successfully"
+                    },
+                    "data": {
+                        "title": "data",
+                        "properties": {
+                            "id": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "name": {
+                                "type": "string",
+                                "example": "My first todo"
+                            },
+                            "description": {
+                                "type": "string",
+                                "example": "my todo description"
+                            },
+                            "user_id": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "created_at": {
+                                "type": "string",
+                                "example": "2023-03-02T12:46:12.000000Z"
+                            },
+                            "updated_at": {
+                                "type": "string",
+                                "example": "2023-03-02T12:46:12.000000Z"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "UnprocessableContentResponseDTO": {
+                "title": "Unprocessable Content Response DTO",
+                "description": "Unprocessable Content (422 code) Response DTO",
+                "properties": {
+                    "status": {
+                        "title": "status",
+                        "type": "integer",
+                        "example": 422
+                    },
+                    "success": {
+                        "title": "success",
+                        "type": "boolean",
+                        "example": false
+                    },
+                    "message": {
+                        "title": "message",
+                        "type": "string",
+                        "example": "Some requested data doesn't match the condition"
+                    },
+                    "errors": {
+                        "title": "errors",
+                        "properties": {
+                            "key": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "example": "Validation error shows for the key"
+                                }
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "sanctum": {
+                "type": "apiKey",
+                "description": "Enter token in format (Bearer <token>)",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "TODO",
+            "description": "API Endpoints of TODO"
+        }
+    ]
+}
